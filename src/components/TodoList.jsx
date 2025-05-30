@@ -7,7 +7,6 @@ import { FiPlus } from "react-icons/fi";
 import { FiEdit } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
-import { Tooltip as ReactTooltip } from 'react-tooltip';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
