@@ -158,12 +158,12 @@ const TodoList = () => {
             <h1 className="text-4xl font-bold text-gray-800 mb-8">Todo List Application</h1>
 
             <DragDropContext onDragEnd={onDragEnd}>
-                <div className="flex gap-6">
+                <div className="flex flex-col md:flex-col lg:flex-row gap-6">
                     {columnOrder.map((colKey) => (
                         <Droppable droppableId={colKey} key={colKey}>
                             {(provided) => (
                                 <div
-                                    className="w-1/3 h-auto p-5 rounded-xl bg-white shadow-md"
+                                    className="w-full lg:w-1/3 h-auto p-5 rounded-xl bg-white shadow-md"
                                     ref={provided.innerRef}
                                     {...provided.droppableProps}
                                 >
