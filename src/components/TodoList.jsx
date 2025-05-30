@@ -15,8 +15,8 @@ const TodoList = () => {
         new: [
             {
                 id: "1",
-                title: "Admin Panel Test Case",
-                description: "Build and test the admin dashboard interface.",
+                title: "Need to change the admin dashboard interface",
+                description: "The current admin dashboard is not user-friendly and needs a complete redesign to improve usability and aesthetics.",
                 attachments: 2,
                 status: "New",
                 isEditing: false,

@@ -20,7 +20,7 @@ A simple, interactive Todo List application built with React that supports drag-
 
 ## Live Link
 
-_https://todo-list-application-virid.vercel.app/_
+https://todo-list-application-virid.vercel.app/
 
 ---
 
