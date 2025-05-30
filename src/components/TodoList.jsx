@@ -98,31 +98,31 @@ const TodoList = () => {
 
 
     return (
-        <div className="w-full min-h-screen py-7 px-10 bg-gray-100">
-            <h1 className="text-3xl font-bold py-10">Todo List Application</h1>
+        <div className="w-full min-h-screen py-10 px-12 bg-gradient-to-br from-gray-100 to-gray-200">
+            <h1 className="text-4xl font-bold text-gray-800 mb-8">Todo List Application</h1>
 
             <DragDropContext onDragEnd={onDragEnd}>
-                <div className="flex gap-5">
+                <div className="flex gap-6">
                     {columnOrder.map((colKey) => (
                         <Droppable droppableId={colKey} key={colKey}>
                             {(provided) => (
                                 <div
-                                    className="w-1/3 h-auto p-4 rounded-sm bg-gray-300"
+                                    className="w-1/3 h-auto p-5 rounded-xl bg-white shadow-md"
                                     ref={provided.innerRef}
                                     {...provided.droppableProps}
                                 >
-                                    <div className="text-xl font-semibold mb-2">
+                                    <div className="text-2xl font-semibold text-gray-700 mb-4">
                                         {columnTitles[colKey]}
                                     </div>
                                     {columns[colKey].map((card, index) => (
                                         <Draggable draggableId={card.id} index={index} key={card.id}>
                                             {(provided) => (
                                                 <div
-                                                    className={`w-full h-auto mt-4 p-3 rounded-sm ${card.status === "New"
-                                                        ? "bg-blue-300"
+                                                    className={`w-full h-auto mt-4 p-4 rounded-lg shadow-sm transition-all ${card.status === "New"
+                                                        ? "bg-blue-100 border-l-4 border-blue-500"
                                                         : card.status === "Ongoing"
-                                                            ? "bg-orange-300"
-                                                            : "bg-green-300"
+                                                            ? "bg-orange-100 border-l-4 border-orange-500"
+                                                            : "bg-green-100 border-l-4 border-green-500"
                                                         }`}
                                                     ref={provided.innerRef}
                                                     {...provided.draggableProps}
@@ -131,7 +131,7 @@ const TodoList = () => {
                                                     {card.isEditing ? (
                                                         <div>
                                                             <input
-                                                                className="w-full border border-gray-400 rounded px-2 py-1 text-[18px] font-semibold mb-2"
+                                                                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-[18px] font-[500] mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
                                                                 placeholder="Enter title"
                                                                 value={card.title}
                                                                 onChange={(e) => {
@@ -145,7 +145,7 @@ const TodoList = () => {
                                                                 }}
                                                             />
                                                             <textarea
-                                                                className="w-full border border-gray-400 rounded px-2 py-1 text-sm text-gray-700 mb-2"
+                                                                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-[17px] text-gray-700 mb-3 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
                                                                 placeholder="Enter description"
                                                                 value={card.description}
                                                                 onChange={(e) => {
@@ -159,12 +159,12 @@ const TodoList = () => {
                                                                 }}
                                                             />
 
-                                                            <div className="flex gap-2">
+                                                            <div className="flex gap-3">
                                                                 <button
                                                                     onClick={() =>
                                                                         handleSaveCard(colKey, card.id, card.title, card.description)
                                                                     }
-                                                                    className="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                                                    className="px-5 py-2 bg-blue-500 text-white rounded-md cursor-pointer hover:bg-blue-600 transition"
                                                                 >
                                                                     Save
                                                                 </button>
@@ -178,7 +178,7 @@ const TodoList = () => {
                                                                             ),
                                                                         }));
                                                                     }}
-                                                                    className="px-4 py-1 bg-gray-500 text-white rounded hover:bg-gray-600"
+                                                                    className="px-5 py-2 bg-gray-400 text-white rounded-md cursor-pointer hover:bg-gray-500 transition"
                                                                 >
                                                                     Cancel
                                                                 </button>
@@ -186,30 +186,22 @@ const TodoList = () => {
                                                         </div>
                                                     ) : (
                                                         <div>
-                                                            <div className="text-[20px] font-[600]">{card.title}</div>
-                                                            <div className="text-[16px] text-gray-600 mt-1">
+                                                            <div className="text-[22px] font-[600] ">{card.title}</div>
+                                                            <div className="text-[17px] text-gray-600 mt-1">
                                                                 {card.description}
                                                             </div>
-                                                            <div className="flex justify-between">
-                                                                <div className="flex items-center gap-x-10 mt-2">
-
-                                                                    <div className="flex items-center gap-x-2 font-[600]">
-                                                                        Status:
-                                                                        <span className="text-sm ">{card.status}</span>
-                                                                    </div>
+                                                            <div className="flex justify-between items-center mt-4">
+                                                                <div className="flex items-center gap-x-2 text-[15px] font-medium text-gray-700">
+                                                                    Status:<span className="font-semibold">{card.status}</span>
                                                                 </div>
-                                                                <div className="flex gap-x-5 items-center mt-2">
-                                                                    <div className='p-1 cursor-pointer'>
-                                                                        <FiEdit
-                                                                            onClick={() => handleEditCard(colKey, card.id)}
-
-                                                                        />
+                                                                <div className="flex gap-x-4 items-center text-gray-600">
+                                                                    <div className='cursor-pointer hover:text-blue-600'>
+                                                                        <FiEdit onClick={() => handleEditCard(colKey, card.id)} />
                                                                     </div>
-                                                                    <div className='p-1 cursor-pointer'>
+                                                                    <div className='cursor-pointer hover:text-red-600'>
                                                                         <AiOutlineDelete
                                                                             onClick={() => handleDeleteCard(colKey, card.id)}
-                                                                            className='text-[18px]'
-
+                                                                            className='text-lg'
                                                                         />
                                                                     </div>
                                                                 </div>
@@ -223,10 +215,11 @@ const TodoList = () => {
                                     {provided.placeholder}
                                     {colKey === "new" && (
                                         <div
-                                            className="w-full h-auto flex items-center gap-x-3 mt-5 cursor-pointer text-[18px]"
+                                            className=" w-40  py-1 flex items-center justify-center gap-x-2 text-[20px] font-[600] bg-blue-500 mt-5 text-white cursor-pointer rounded-md hover:bg-blue-600 transition "
                                             onClick={handleAddCard}
                                         >
-                                            <FiPlus /> Add a card
+                                            <FiPlus />
+                                            <div>Add a Card</div>
                                         </div>
                                     )}
                                 </div>
@@ -238,6 +231,7 @@ const TodoList = () => {
 
             <ToastContainer position="bottom-right" autoClose={3000} />
         </div>
+
     )
 }
 
