@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { GrAttachment } from "react-icons/gr";
@@ -6,6 +6,8 @@ import { GoHash } from "react-icons/go";
 import { FiPlus } from "react-icons/fi";
 import { FiEdit } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
+import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
+import { Tooltip as ReactTooltip } from 'react-tooltip';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -19,6 +21,8 @@ const TodoList = () => {
                 attachments: 2,
                 status: "New",
                 isEditing: false,
+                startTime: Date.now(),
+                endTime: null,
             },
         ],
         ongoing: [],
@@ -33,6 +37,8 @@ const TodoList = () => {
             attachments: 0,
             status: "New",
             isEditing: true,
+            startTime: Date.now(),
+            endTime: null,
         };
         setColumns((prev) => ({
             ...prev,
@@ -79,8 +85,11 @@ const TodoList = () => {
         const sourceCards = [...columns[sourceCol]];
         const [removed] = sourceCards.splice(source.index, 1);
 
-        // Update the status label
-        const updatedCard = { ...removed, status: columnTitles[destCol] };
+        const updatedCard = {
+            ...removed,
+            status: columnTitles[destCol],
+            endTime: destCol === "done" ? Date.now() : null
+        };
 
         const destCards = [...columns[destCol]];
         destCards.splice(destination.index, 0, updatedCard);
@@ -90,11 +99,58 @@ const TodoList = () => {
             [sourceCol]: sourceCards,
             [destCol]: destCards,
         });
+
         toast.success(`Task moved to "${columnTitles[destCol]}"`);
     };
 
+
     const columnOrder = ["new", "ongoing", "done"];
     const columnTitles = { new: "New", ongoing: "Ongoing", done: "Done" };
+
+    const moveCard = (card, fromCol, direction) => {
+        const fromIndex = columnOrder.indexOf(fromCol);
+        const toIndex = direction === "left" ? fromIndex - 1 : fromIndex + 1;
+        if (toIndex < 0 || toIndex >= columnOrder.length) return;
+
+        const toCol = columnOrder[toIndex];
+
+        const updatedCard = {
+            ...card,
+            status: columnTitles[toCol],
+            endTime: toCol === "done" ? Date.now() : null,
+        };
+
+        setColumns(prev => {
+            const fromCards = prev[fromCol].filter(c => c.id !== card.id);
+            const toCards = [...prev[toCol], updatedCard];
+            return {
+                ...prev,
+                [fromCol]: fromCards,
+                [toCol]: toCards,
+            };
+        });
+
+        toast.success(`Task moved to "${columnTitles[toCol]}"`);
+    };
+
+
+    const formatElapsedTime = (start, end) => {
+        if (!start) return "0h 0m 0s";
+
+        const duration = (end ? end : Date.now()) - start;
+        const seconds = Math.floor((duration / 1000) % 60);
+        const minutes = Math.floor((duration / (1000 * 60)) % 60);
+        const hours = Math.floor(duration / (1000 * 60 * 60));
+
+        return `${hours}h ${minutes}m ${seconds}s`;
+    };
+
+    const [, forceUpdate] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => forceUpdate((n) => n + 1), 1000);
+        return () => clearInterval(interval);
+    }, []);
 
 
     return (
@@ -192,9 +248,40 @@ const TodoList = () => {
                                                             </div>
                                                             <div className="flex justify-between items-center mt-4">
                                                                 <div className="flex items-center gap-x-2 text-[15px] font-medium text-gray-700">
-                                                                    Status:<span className="font-semibold">{card.status}</span>
+                                                                    Status: <span className="font-semibold">{card.status}</span>
                                                                 </div>
-                                                                <div className="flex gap-x-4 items-center text-gray-600">
+                                                                <div className="text-[15px] text-gray-500">
+                                                                    Time: {formatElapsedTime(card.startTime, card.endTime)}
+                                                                </div>
+
+                                                                <div className='flex items-center gap-2'>
+
+                                                                    {(card.status === "Ongoing" || card.status === "Done") && (
+                                                                        <>
+                                                                            <FaArrowLeftLong
+                                                                                onClick={() => moveCard(card, colKey, "left")}
+                                                                                className="text-[18px] text-gray-600 cursor-pointer hover:text-gray-800"
+                                                                                title='Move Left'
+                                                                            />
+
+                                                                        </>
+
+                                                                    )}
+
+                                                                    {(card.status === "New" || card.status === "Ongoing") && (
+                                                                        <>
+                                                                            <FaArrowRightLong
+                                                                                onClick={() => moveCard(card, colKey, "right")}
+                                                                                className="text-[18px] text-gray-600 cursor-pointer hover:text-gray-800"
+                                                                                title='Move Right'
+
+                                                                            />
+
+
+                                                                        </>
+                                                                    )}
+                                                                </div>
+                                                                <div className="flex items-center gap-2">
                                                                     <div className='cursor-pointer hover:text-blue-600'>
                                                                         <FiEdit onClick={() => handleEditCard(colKey, card.id)} />
                                                                     </div>
@@ -206,6 +293,7 @@ const TodoList = () => {
                                                                     </div>
                                                                 </div>
                                                             </div>
+
                                                         </div>
                                                     )}
                                                 </div>
@@ -230,6 +318,8 @@ const TodoList = () => {
             </DragDropContext>
 
             <ToastContainer position="bottom-right" autoClose={3000} />
+
+
         </div>
 
     )
