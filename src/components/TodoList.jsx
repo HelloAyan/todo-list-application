@@ -162,9 +162,11 @@ const TodoList = () => {
         <div className="w-full min-h-screen py-10 px-12 bg-gradient-to-br from-gray-100 to-gray-200">
             <h1 className="text-4xl font-bold text-gray-800 mb-8">Todo List Application</h1>
 
-            <h2>{count}</h2>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded mr-2" onClick={() => { dispatch(increment()) }}>+</button>
-            <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={() => { dispatch(decrement()) }}>-</button>
+            <div className='flex items-center gap-5 my-3'>
+                <div>{count}</div>
+                <button className="bg-blue-500 text-white px-4 py-2 rounded mr-2" onClick={() => { dispatch(increment()) }}>+</button>
+                <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={() => { dispatch(decrement()) }}>-</button>
+            </div>
 
             <DragDropContext onDragEnd={onDragEnd}>
                 <div className="flex flex-col md:flex-col lg:flex-row gap-6">
