@@ -1,6 +1,6 @@
-# React Todo List Application with Drag-and-Drop
+# React Task Management Application with Drag-and-Drop
 
-A simple, interactive Todo List application built with React that supports drag-and-drop task management across three columns: **New**, **Ongoing**, and **Done**. It features task creation, editing, deletion, status updates, time tracking, and smooth user interactions with helpful notifications.
+A simple, interactive Task Management application built with React that supports drag-and-drop task management across three columns: **New**, **Ongoing**, and **Done**. It features task creation, editing, deletion, status updates, time tracking, and smooth user interactions with helpful notifications.
 
 ---
 

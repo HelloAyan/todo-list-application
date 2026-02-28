@@ -9,8 +9,11 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { increment, decrement } from '../redux/features/counterSlice';
 
 const TodoList = () => {
+
     const [columns, setColumns] = useState({
         new: [
             {
@@ -151,10 +154,17 @@ const TodoList = () => {
         return () => clearInterval(interval);
     }, []);
 
+    const count = useSelector((state) => state.counter.value);
+    const dispatch = useDispatch();
+
 
     return (
         <div className="w-full min-h-screen py-10 px-12 bg-gradient-to-br from-gray-100 to-gray-200">
             <h1 className="text-4xl font-bold text-gray-800 mb-8">Todo List Application</h1>
+
+            <h2>{count}</h2>
+            <button className="bg-blue-500 text-white px-4 py-2 rounded mr-2" onClick={() => { dispatch(increment()) }}>+</button>
+            <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={() => { dispatch(decrement()) }}>-</button>
 
             <DragDropContext onDragEnd={onDragEnd}>
                 <div className="flex flex-col md:flex-col lg:flex-row gap-6">
