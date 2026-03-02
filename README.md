@@ -20,7 +20,7 @@ A simple, interactive Task Management application built with React that supports
 
 ## Live Link
 
-https://todo-list-application-virid.vercel.app/
+https://task-management-application-six-delta.vercel.app
 
 ---
 
