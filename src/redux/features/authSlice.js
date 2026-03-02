@@ -20,14 +20,16 @@ export const registerUser = createAsyncThunk(
     }
 );
 
+const initialState = {
+    user: null,
+    loading: false,
+    error: null,
+}
+
 // Create Slice
 const authSlice = createSlice({
     name: "auth",
-    initialState: {
-        user: null,
-        loading: false,
-        error: null,
-    },
+    initialState,
     reducers: {
         logout: (state) => {
             state.user = null;

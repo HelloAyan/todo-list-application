@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../redux/features/authSlice";
 import toast, { Toaster } from "react-hot-toast";
-import { AiOutlineLoading3Quarters } from "react-icons/ai"; // loader icon
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function Register() {
     const dispatch = useDispatch();
