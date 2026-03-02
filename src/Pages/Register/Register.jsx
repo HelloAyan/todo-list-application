@@ -105,8 +105,8 @@ export default function Register() {
                             value={name}
                             onChange={handleChange(setName, "name")}
                             className={`w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 outline-none ${errors.name
-                                    ? "border-red-500 focus:ring-red-500"
-                                    : "border-gray-300 focus:ring-blue-500"
+                                ? "border-red-500 focus:ring-red-500"
+                                : "border-gray-300 focus:ring-blue-500"
                                 }`}
                         />
                         {errors.name && (
@@ -124,8 +124,8 @@ export default function Register() {
                             value={email}
                             onChange={handleChange(setEmail, "email")}
                             className={`w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 outline-none ${errors.email
-                                    ? "border-red-500 focus:ring-red-500"
-                                    : "border-gray-300 focus:ring-blue-500"
+                                ? "border-red-500 focus:ring-red-500"
+                                : "border-gray-300 focus:ring-blue-500"
                                 }`}
                         />
                         {errors.email && (
@@ -144,8 +144,8 @@ export default function Register() {
                             onChange={handleChange(setPassword, "password")}
                             autoComplete="new-password"
                             className={`w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 outline-none ${errors.password
-                                    ? "border-red-500 focus:ring-red-500"
-                                    : "border-gray-300 focus:ring-blue-500"
+                                ? "border-red-500 focus:ring-red-500"
+                                : "border-gray-300 focus:ring-blue-500"
                                 }`}
                         />
                         {errors.password && (
@@ -169,8 +169,8 @@ export default function Register() {
                             )}
                             autoComplete="new-password"
                             className={`w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 outline-none ${errors.confirmPassword
-                                    ? "border-red-500 focus:ring-red-500"
-                                    : "border-gray-300 focus:ring-blue-500"
+                                ? "border-red-500 focus:ring-red-500"
+                                : "border-gray-300 focus:ring-blue-500"
                                 }`}
                         />
                         {errors.confirmPassword && (
@@ -184,6 +184,7 @@ export default function Register() {
                     <div className="flex items-center gap-2 text-sm">
                         <input
                             type="checkbox"
+                            id="terms"
                             checked={terms}
                             onChange={(e) => {
                                 setTerms(e.target.checked);
@@ -193,8 +194,13 @@ export default function Register() {
                                         terms: null,
                                     }));
                             }}
+                            className="cursor-pointer"
                         />
-                        <label>
+
+                        <label
+                            htmlFor="terms"
+                            className="cursor-pointer"
+                        >
                             I agree to the Terms & Conditions
                         </label>
                     </div>
@@ -208,7 +214,7 @@ export default function Register() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50 flex justify-center items-center gap-2"
+                        className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50 flex justify-center items-center gap-2 cursor-pointer"
                     >
                         {loading && (
                             <AiOutlineLoading3Quarters className="animate-spin h-5 w-5 text-white" />

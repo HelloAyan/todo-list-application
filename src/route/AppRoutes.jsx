@@ -1,15 +1,23 @@
-import React from 'react'
-import { Route, Routes } from 'react-router-dom'
-import Login from '../Pages/Login/Login'
-import TodoList from '../components/TodoList'
-import Register from '../Pages/Register/Register'
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import ProtectedRoute from "../route/PrivateRoute";
+import TodoList from "../components/TodoList";
+import Login from "../Pages/Login/Login";
+import Register from "../Pages/Register/Register";
 
 export default function AppRoutes() {
     return (
         <Routes>
-            <Route path='/' element={<TodoList />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+
+            {/* Protected Routes */}
+            <Route path="/" element={
+                <ProtectedRoute>
+                    <TodoList />
+                </ProtectedRoute>
+            }
+            />
         </Routes>
-    )
+    );
 }

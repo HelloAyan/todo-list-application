@@ -22,6 +22,25 @@ export const registerUser = createAsyncThunk(
     }
 );
 
+
+// Async thunk for user login
+export const loginUser = createAsyncThunk(
+    "auth/login",
+    async (userData, { rejectWithValue }) => {
+        try {
+            const response = await axios.post(
+                `${BASE_URL}/login`,
+                userData
+            );
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(
+                error.response?.data?.message || "Login failed"
+            );
+        }
+    }
+);
+
 const initialState = {
     user: null,
     loading: false,
@@ -48,6 +67,24 @@ const authSlice = createSlice({
                 state.user = action.payload;
             })
             .addCase(registerUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            });
+
+        // Login cases
+        builder
+            .addCase(loginUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(loginUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.user = action.payload.user;
+
+                // Save token
+                localStorage.setItem("token", action.payload.token);
+            })
+            .addCase(loginUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             });
