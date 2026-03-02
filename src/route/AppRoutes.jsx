@@ -4,12 +4,14 @@ import ProtectedRoute from "../route/PrivateRoute";
 import TodoList from "../components/TodoList";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
+import ForgetPassword from "../Pages/ForgetPassword/ForgetPassword";
 
 export default function AppRoutes() {
     return (
         <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/forget-password" element={<ForgetPassword />} />
 
             {/* Protected Routes */}
             <Route path="/" element={
