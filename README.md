@@ -30,7 +30,6 @@ https://task-management-application-six-delta.vercel.app
 
    ```bash
    git clone https://github.com/HelloAyan/task-management-application.git
-   cd react-todo-dnd
 
 2. Install Project Packages:
 
