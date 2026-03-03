@@ -35,8 +35,7 @@ export default function Login() {
             const response = await dispatch(loginUser({ email, password })).unwrap();
 
             // Save token
-            if (rememberMe) localStorage.setItem("token", response.token);
-            else sessionStorage.setItem("token", response.token);
+            localStorage.setItem("token", response.token);
 
             toast.success("Login successful!");
             navigate("/"); // Redirect after login
