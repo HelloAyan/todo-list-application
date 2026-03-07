@@ -41,6 +41,22 @@ export const loginUser = createAsyncThunk(
     }
 );
 
+// Async thunk for forget password
+export const forgetPassword = createAsyncThunk(
+    "auth/forgetPassword",
+    async (email, { rejectWithValue }) => {
+        try {
+            const response = await axios.post(
+                `${BASE_URL}/forget-password`,
+                { email }
+            );
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data?.message || "Something went wrong")
+        }
+    }
+)
+
 const initialState = {
     user: null,
     loading: false,
@@ -88,6 +104,21 @@ const authSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
             });
+
+        // Forget password cases
+        builder
+            .addCase(forgetPassword.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(forgetPassword.fulfilled, (state, action) => {
+                state.loading = false;
+                state.message = action.payload.message;
+            })
+            .addCase(forgetPassword.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
     },
 });
 
