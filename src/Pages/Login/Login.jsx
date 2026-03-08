@@ -38,7 +38,7 @@ export default function Login() {
             localStorage.setItem("token", response.token);
 
             toast.success("Login successful!");
-            navigate("/"); // Redirect after login
+            navigate("/");
         } catch (err) {
             toast.error(err || "Login failed");
         }
