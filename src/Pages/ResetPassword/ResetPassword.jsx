@@ -15,8 +15,33 @@ export default function ResetPassword() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
+    const [passwordError, setPasswordError] = useState("");
+    const [confirmError, setConfirmError] = useState("");
+
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        let valid = true;
+
+        // password required
+        if (!password) {
+            setPasswordError("New password field required");
+            valid = false;
+        }
+
+        // confirm password required
+        if (!confirmPassword) {
+            setConfirmError("Confirm password field required");
+            valid = false;
+        }
+
+        // password match check
+        if (password && confirmPassword && password !== confirmPassword) {
+            setConfirmError("Password not match");
+            valid = false;
+        }
+
+        if (!valid) return;
 
         dispatch(
             resetPassword({
@@ -54,6 +79,7 @@ export default function ResetPassword() {
 
                 <form onSubmit={handleSubmit} className="space-y-4">
 
+                    {/* New Password */}
                     <div>
                         <label className="text-sm font-medium">
                             New Password
@@ -63,12 +89,27 @@ export default function ResetPassword() {
                             type="password"
                             placeholder="Enter new password"
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
                             autoComplete="new-password"
-                            className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                                setPasswordError("");
+                            }}
+                            className={`w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2
+                            
+                            ${passwordError
+                                    ? "border-red-500 focus:ring-red-500"
+                                    : "border-gray-300 focus:ring-blue-500"}
+                            `}
                         />
+
+                        {passwordError && (
+                            <p className="text-red-500 text-sm mt-1">
+                                {passwordError}
+                            </p>
+                        )}
                     </div>
 
+                    {/* Confirm Password */}
                     <div>
                         <label className="text-sm font-medium">
                             Confirm Password
@@ -78,9 +119,23 @@ export default function ResetPassword() {
                             type="password"
                             placeholder="Confirm password"
                             value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
+                            onChange={(e) => {
+                                setConfirmPassword(e.target.value);
+                                setConfirmError("");
+                            }}
+                            className={`w-full mt-1 px-4 py-2 border rounded-lg outline-none focus:ring-2
+                            
+                            ${confirmError
+                                    ? "border-red-500 focus:ring-red-500"
+                                    : "border-gray-300 focus:ring-blue-500"}
+                            `}
                         />
+
+                        {confirmError && (
+                            <p className="text-red-500 text-sm mt-1">
+                                {confirmError}
+                            </p>
+                        )}
                     </div>
 
                     <button
