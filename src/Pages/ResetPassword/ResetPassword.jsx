@@ -1,6 +1,45 @@
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { resetPassword } from "../../redux/features/authSlice";
+import { toast } from "react-toastify";
 
 export default function ResetPassword() {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { token } = useParams();
+
+    const { loading, message, error } = useSelector((state) => state.auth);
+
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        dispatch(
+            resetPassword({
+                token,
+                password,
+                confirmPassword
+            })
+        );
+    };
+
+    useEffect(() => {
+
+        if (message) {
+            toast.success(message);
+            navigate("/login");
+        }
+
+        if (error) {
+            toast.error(error);
+        }
+
+    }, [message, error, navigate]);
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
             <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8">
@@ -13,9 +52,8 @@ export default function ResetPassword() {
                     Enter your new password below
                 </p>
 
-                <form className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
 
-                    {/* New Password */}
                     <div>
                         <label className="text-sm font-medium">
                             New Password
@@ -24,12 +62,13 @@ export default function ResetPassword() {
                         <input
                             type="password"
                             placeholder="Enter new password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             autoComplete="new-password"
                             className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
 
-                    {/* Confirm Password */}
                     <div>
                         <label className="text-sm font-medium">
                             Confirm Password
@@ -38,15 +77,18 @@ export default function ResetPassword() {
                         <input
                             type="password"
                             placeholder="Confirm password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
                             className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
 
                     <button
                         type="submit"
-                        className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition cursor-pointer"
+                        disabled={loading}
+                        className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
                     >
-                        Reset Password
+                        {loading ? "Resetting..." : "Reset Password"}
                     </button>
 
                 </form>
