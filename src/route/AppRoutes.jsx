@@ -7,6 +7,8 @@ import Register from "../Pages/Register/Register";
 import ForgetPassword from "../Pages/ForgetPassword/ForgetPassword";
 import ResetPassword from "../Pages/ResetPassword/ResetPassword";
 import NotFound from "../Pages/NotFound";
+import Dashboard from "../layout/Dashboard";
+import Home from "../Pages/Home";
 
 export default function AppRoutes() {
     return (
@@ -22,7 +24,9 @@ export default function AppRoutes() {
             {/* Protected Routes */}
             <Route path="/" element={
                 <ProtectedRoute>
-                    <TodoList />
+                    {/* <TodoList /> */}
+                    {/* <Dashboard /> */}
+                    <Home />
                 </ProtectedRoute>
             }
             />
