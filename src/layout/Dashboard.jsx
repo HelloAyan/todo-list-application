@@ -1,8 +1,9 @@
 import React from 'react'
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
+import { Outlet } from 'react-router-dom';
 
-const Dashboard = ({ children }) => {
+const Dashboard = () => {
     return (
         <div className="flex">
 
@@ -13,7 +14,7 @@ const Dashboard = ({ children }) => {
                 <Header />
 
                 <main className="p-6 bg-gray-100 min-h-screen">
-                    {children}
+                    <Outlet />
                 </main>
 
             </div>

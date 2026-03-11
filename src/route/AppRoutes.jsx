@@ -9,6 +9,7 @@ import ResetPassword from "../Pages/ResetPassword/ResetPassword";
 import NotFound from "../Pages/NotFound";
 import Dashboard from "../layout/Dashboard";
 import Home from "../Pages/Home";
+import Users from "../Pages/Users/Users";
 
 export default function AppRoutes() {
     return (
@@ -18,18 +19,16 @@ export default function AppRoutes() {
             <Route path="/forget-password" element={<ForgetPassword />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
 
-            {/* 404 Route */}
-            <Route path="*" element={<NotFound />} />
-
             {/* Protected Routes */}
             <Route path="/" element={
                 <ProtectedRoute>
-                    {/* <TodoList /> */}
-                    {/* <Dashboard /> */}
-                    <Home />
+                    <TodoList />
                 </ProtectedRoute>
             }
             />
+
+            {/* 404 Route */}
+            <Route path="*" element={<NotFound />} />
         </Routes>
     );
 }

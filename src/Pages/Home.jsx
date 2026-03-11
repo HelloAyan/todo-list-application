@@ -4,8 +4,6 @@ import Dashboard from '../layout/Dashboard'
 const Home = () => {
     return (
         <>
-            <Dashboard />
-
             <h2 className="text-2xl font-semibold mb-6">
                 Dashboard Overview
             </h2>
