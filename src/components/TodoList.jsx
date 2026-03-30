@@ -157,10 +157,7 @@ const TodoList = () => {
 
 
     return (
-        <div className="w-full min-h-screen py-10 px-12 bg-gradient-to-br from-gray-100 to-gray-200">
-            <h1 className="text-4xl font-bold text-gray-800 mb-8">Task Management Application</h1>
-
-
+        <div className="w-full h-auto py-10 px-5 bg-gradient-to-br from-gray-100 to-gray-200">
 
             <DragDropContext onDragEnd={onDragEnd}>
                 <div className="flex flex-col md:flex-col lg:flex-row gap-6">
@@ -321,9 +318,6 @@ const TodoList = () => {
                     ))}
                 </div>
             </DragDropContext>
-
-            <ToastContainer position="bottom-right" autoClose={3000} />
-
 
         </div>
 
